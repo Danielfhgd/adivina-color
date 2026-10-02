@@ -1,0 +1,19 @@
+{
+  "id": "jake",
+  "characterName": "jake",
+  "zoneName": "piel",
+  "baseImage": "/characters/jake/base.png",
+  "maskImage": "/characters/jake/mask.png",
+  "target": {
+    "h": 49,
+    "s": 93,
+    "l": 52
+  },
+  "targetRgb": {
+    "r": 246,
+    "g": 203,
+    "b": 21
+  },
+  "targetHex": "#F6CB15",
+  "selectedPixels": 68825
+}
