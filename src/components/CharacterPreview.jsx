@@ -9,21 +9,28 @@ export default function CharacterPreview({
 }) {
   const selectedColor = hslToCss(color);
 
+  // Fix image paths for GitHub Pages / Vite BASE_URL
+  const cleanBasePath = baseImage.replace(/^\.\//, '');
+  const finalBaseSrc = `${import.meta.env.BASE_URL}${cleanBasePath}`;
+
+  const cleanMaskPath = maskImage.replace(/^\.\//, '');
+  const finalMaskSrc = `${import.meta.env.BASE_URL}${cleanMaskPath}`;
+
   return (
     <div className="character-preview-stage">
       <div
         className="character-image-layer"
         style={{
           backgroundColor: selectedColor,
-          maskImage: `url("${maskImage}")`,
-          WebkitMaskImage: `url("${maskImage}")`,
+          maskImage: `url("${finalMaskSrc}")`,
+          WebkitMaskImage: `url("${finalMaskSrc}")`,
         }}
         aria-label={`${zoneName} recoloreable de ${characterName}`}
         role="img"
       />
       <img
         className="character-base-image"
-        src={baseImage}
+        src={finalBaseSrc}
         alt={characterName}
         draggable="false"
       />

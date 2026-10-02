@@ -10,6 +10,13 @@ export default function ResultPanel({
   const userColorCss = hslToCss(selectedColor);
   const targetColorCss = hslToCss(targetColor);
 
+  // Fix image paths for GitHub Pages / Vite BASE_URL
+  const cleanBasePath = challenge.baseImage.replace(/^\.\//, '');
+  const finalBaseSrc = `${import.meta.env.BASE_URL}${cleanBasePath}`;
+
+  const cleanMaskPath = challenge.maskImage.replace(/^\.\//, '');
+  const finalMaskSrc = `${import.meta.env.BASE_URL}${cleanMaskPath}`;
+
   return (
     <section className="result-panel">
       <p className="section-label">Resultado de la ronda</p>
@@ -24,13 +31,13 @@ export default function ResultPanel({
               className="character-image-layer"
               style={{
                 backgroundColor: userColorCss,
-                maskImage: `url("${challenge.maskImage}")`,
-                WebkitMaskImage: `url("${challenge.maskImage}")`,
+                maskImage: `url("${finalMaskSrc}")`,
+                WebkitMaskImage: `url("${finalMaskSrc}")`,
               }}
             />
             <img
               className="character-base-image"
-              src={challenge.baseImage}
+              src={finalBaseSrc}
               alt={challenge.characterName}
               draggable="false"
             />
@@ -47,13 +54,13 @@ export default function ResultPanel({
               className="character-image-layer"
               style={{
                 backgroundColor: targetColorCss,
-                maskImage: `url("${challenge.maskImage}")`,
-                WebkitMaskImage: `url("${challenge.maskImage}")`,
+                maskImage: `url("${finalMaskSrc}")`,
+                WebkitMaskImage: `url("${finalMaskSrc}")`,
               }}
             />
             <img
               className="character-base-image"
-              src={challenge.baseImage}
+              src={finalBaseSrc}
               alt={challenge.characterName}
               draggable="false"
             />
