@@ -59,7 +59,6 @@ export default function StartScreen({
                   type="text"
                   value={playerName}
                   maxLength="18"
-                  placeholder="Ejemplo: ZitroPlays"
                   onChange={(event) => onPlayerNameChange(event.target.value)}
                   className="input"
                 />

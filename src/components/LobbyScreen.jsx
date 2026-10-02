@@ -71,7 +71,7 @@ export default function LobbyScreen({
               className="start-button"
               type="button"
               onClick={onStartGame}
-              disabled={players.length < 1}
+              disabled={players.length <= 1}
             >
               Iniciar Partida Multijugador
             </button>

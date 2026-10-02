@@ -53,6 +53,7 @@ body {
 button,
 input,
 select,
+
 textarea {
   font: inherit;
   color: inherit;
@@ -66,6 +67,7 @@ button {
 
 button:disabled,
 input:disabled,
+
 select:disabled {
   cursor: not-allowed;
   opacity: 0.5;
@@ -494,51 +496,6 @@ img {
   background: var(--color-text-dim);
 }
 
-@media (max-width: 768px) {
-  :root {
-    --radius-xl: 16px;
-    --radius-lg: 12px;
-    --radius-md: 8px;
-  }
-
-  .screen {
-    padding: 20px 16px;
-  }
-
-  .modal {
-    padding: 22px;
-  }
-
-  .btn {
-    padding: 10px 18px;
-    font-size: 0.85rem;
-  }
-
-  .stat-value {
-    font-size: 1.15rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .screen {
-    padding: 16px 12px;
-  }
-
-  .card {
-    border-radius: var(--radius-lg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 /* ==========================================================================
    START SCREEN & LOBBY SCREEN
    ========================================================================== */
@@ -965,6 +922,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
 }
 
 .start-button:disabled {
@@ -972,10 +930,15 @@ img {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+  background-color: #4B4D61;
 }
 
-.leave-button {
-  width: 100%;
+/* Lobby-specific leave button */
+
+.lobby-actions .leave-button {
+  display: flex !important;
+  margin: 1.5rem auto 0 auto !important;
+  width: fit-content;
   padding: 12px 20px;
   font-size: 0.85rem;
   font-weight: 600;
@@ -984,12 +947,24 @@ img {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
+  text-align: center;
+  justify-content: center;
 }
 
-.leave-button:hover:not(:disabled) {
+.lobby-actions .leave-button:hover:not(:disabled) {
   color: var(--color-danger);
   border-color: var(--color-danger);
   background: rgba(239, 68, 68, 0.08);
+}
+
+/* Game header leave button (keeps original inline-flex in header stats) */
+
+.header-stats .leave-button {
+  display: inline-flex;
+  margin-left: 10px;
+  width: auto !important;
+  max-width: 120px;
+  min-width: 90px;
 }
 
 /* Mobile Responsive */
@@ -1304,6 +1279,7 @@ img {
 }
 
 /* Premium HSL Sliders */
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -1321,6 +1297,7 @@ input[type="range"]:disabled {
 }
 
 /* Thumb */
+
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1428,6 +1405,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Focus visible for sliders */
+
 input[type="range"]:focus-visible::-webkit-slider-thumb {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(99, 102, 241, 0.4);
 }
@@ -2811,45 +2789,117 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 /* Responsive */
 
-@media (max-width: 900px) {
-  .editor-workspace {
-    flex-direction: column;
-    gap: 2rem;
+@media (max-width: 950px) {
+  /* A. MENÚ PRINCIPAL: APILAR EN COLUMNA VERTICAL */
+  .start-layout, .main-menu-container, [class*="menu-container"], .editor-container, .editor-workspace {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2rem !important;
+    padding: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  .canvas-panel,
-  .selection-controls-panel {
-    min-width: 0;
-    width: 100%;
+  .hero-side, .setup-card, .editor-form-card, .canvas-panel, .selection-controls-panel {
+    width: 100% !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    flex: none !important;
+    min-width: 0 !important;
   }
 
-  .editor-form-card {
-    min-width: 0;
+  .hero-side {
+    text-align: center !important;
+    align-items: center !important;
+  }
+  
+  .hero-side ul {
+    display: inline-block !important;
+    text-align: left !important;
+    padding-left: 20px !important;
   }
 
-  .editor-header {
-    flex-direction: column;
-    align-items: stretch;
+  /* 1. El contenedor solo sirve de fondo oscuro centrado */
+  .character-image-stage {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    height: 280px !important; /* Forzamos un marco cuadrado elástico perfecto en móvil */
+    margin: 0 auto !important;
+    background-color: #1E202E !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    padding: 0 !important; /* Quitamos paddings para que no desfasen los cálculos */
   }
 
-  .editor-header .secondary-button {
-    width: 100%;
-    justify-content: center;
-    display: inline-flex !important;
-    align-items: center;
-    background-color: transparent;
-    border: 1px solid #2E3248;
-    border-radius: 8px;
-    color: #9CA3AF;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
+  /* 2. La imagen base se centra de forma elástica en el medio del cuadro */
+  .character-base-image {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
+    object-fit: contain !important;
+    z-index: 1 !important;
   }
 
-  .editor-header .secondary-button:hover:not(:disabled) {
-    background-color: #2E3248;
-    color: #F9FAFB;
-    border-color: #2E3248;
+  /* 3. ¡EL TRUCO CLAVE! La máscara se clava en el centro con un tamaño contain */
+  /* En lugar de estirarse al 100% de la caja, la máscara emulará el comportamiento exacto de object-fit: contain */
+  .character-image-layer {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* Centrado matemático perfecto en el punto central */
+    width: 90% !important;  /* Mismo ancho máximo exacto que la imagen base */
+    height: 90% !important; /* Mismo alto máximo exacto que la imagen base */
+    z-index: 2 !important;
+    pointer-events: none !important;
+    background-color: currentColor !important;
+    
+    /* Forzar a que el recorte del personaje se adapte al centro elástico del contain */
+    mask-size: contain !important;
+    mask-position: center !important;
+    mask-repeat: no-repeat !important;
+    -webkit-mask-size: contain !important;
+    -webkit-mask-position: center !important;
+    -webkit-mask-repeat: no-repeat !important;
+  }
+
+  /* C. CABECERA DEL JUEGO Y MODALES */
+  .header-stats, .game-header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+  
+  .leave-button, .secondary-button.leave-button {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 8px 0 0 0 !important;
+  }
+
+  .modal-card {
+    width: 95% !important;
+    padding: 1.5rem !important;
+  }
+
+  .modal-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  
+  .modal-actions button {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
 }

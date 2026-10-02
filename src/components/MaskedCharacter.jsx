@@ -28,22 +28,26 @@ export default function MaskedCharacter({
       </div>
 
       <div className="character-image-stage">
-        <div
-          className="character-image-layer"
-          style={{
-            backgroundColor: selectedColor,
-            maskImage: `url("${finalMaskSrc}")`,
-            WebkitMaskImage: `url("${finalMaskSrc}")`,
-          }}
-          aria-label={`${zoneName} recoloreable de ${characterName}`}
-          role="img"
-        />
-
+        {/* 1. La imagen base va primero para servir de fondo real de la escala */}
         <img
           className="character-base-image"
           src={finalBaseSrc}
           alt={characterName}
           draggable="false"
+        />
+
+        {/* 2. La capa de color va después para posicionarse encima de forma elástica */}
+        {/* Inyectamos selectedColor tanto en backgroundColor como en color (para currentColor en CSS) */}
+        <div
+          className="character-image-layer"
+          style={{
+            backgroundColor: selectedColor,
+            color: selectedColor,
+            maskImage: `url("${finalMaskSrc}")`,
+            WebkitMaskImage: `url("${finalMaskSrc}")`,
+          }}
+          aria-label={`${zoneName} recoloreable de ${characterName}`}
+          role="img"
         />
       </div>
     </section>

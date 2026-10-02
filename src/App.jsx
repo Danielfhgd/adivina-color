@@ -118,6 +118,20 @@ export default function App() {
     if (!isMultiplayer || !isHost) return;
 
     const sendPing = () => {
+      // REGLA 1: Si está solo en el lobby inicial, no hay timeout
+      if (screen === "lobby" && lobbyPlayers.length <= 1) {
+        pongReceivedRef.current = true; // Mantener vivo falsamente mientras espera
+        return;
+      }
+
+      // REGLA 2: Si ya inició la partida y se queda solo, se activa la expulsión inmediata
+      if (screen !== "lobby" && lobbyPlayers.length <= 1) {
+        if (heartbeatRef.current) clearInterval(heartbeatRef.current);
+        alert("El invitado ha abandonado la sala.");
+        handleLeaveLobby();
+        return;
+      }
+
       if (!pongReceivedRef.current) {
         // No recibimos pong en el ciclo anterior -> invitado desconectado
         if (heartbeatRef.current) clearInterval(heartbeatRef.current);
@@ -136,7 +150,7 @@ export default function App() {
     return () => {
       if (heartbeatRef.current) clearInterval(heartbeatRef.current);
     };
-  }, [isMultiplayer, isHost]);
+  }, [isMultiplayer, isHost, screen, lobbyPlayers]);
 
   // MODO SINGLEPLAYER
   function startGame() {
