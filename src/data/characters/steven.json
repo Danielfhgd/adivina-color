@@ -2,8 +2,8 @@
   "id": "steven",
   "characterName": "steven",
   "zoneName": "camisa",
-  "baseImage": "/characters/steven/base.png",
-  "maskImage": "/characters/steven/mask.png",
+  "baseImage": "./characters/steven/base.png",
+  "maskImage": "./characters/steven/mask.png",
   "target": {
     "h": 354,
     "s": 100,

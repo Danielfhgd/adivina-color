@@ -2,8 +2,8 @@
   "id": "rick",
   "characterName": "rick",
   "zoneName": "cabello",
-  "baseImage": "/characters/rick/base.png",
-  "maskImage": "/characters/rick/mask.png",
+  "baseImage": "./characters/rick/base.png",
+  "maskImage": "./characters/rick/mask.png",
   "target": {
     "h": 198,
     "s": 56,

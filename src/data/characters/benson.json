@@ -2,8 +2,8 @@
   "id": "benson",
   "characterName": "Benson",
   "zoneName": "esfera de chicles",
-  "baseImage": "/characters/benson/base.png",
-  "maskImage": "/characters/benson/mask.png",
+  "baseImage": "./characters/benson/base.png",
+  "maskImage": "./characters/benson/mask.png",
   "target": {
     "h": 329,
     "s": 38,

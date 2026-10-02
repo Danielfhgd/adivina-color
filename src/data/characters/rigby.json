@@ -2,8 +2,8 @@
   "id": "rigby",
   "characterName": "rigby",
   "zoneName": "piel",
-  "baseImage": "/characters/rigby/base.png",
-  "maskImage": "/characters/rigby/mask.png",
+  "baseImage": "./characters/rigby/base.png",
+  "maskImage": "./characters/rigby/mask.png",
   "target": {
     "h": 32,
     "s": 31,

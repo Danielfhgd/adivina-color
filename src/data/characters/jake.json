@@ -2,8 +2,8 @@
   "id": "jake",
   "characterName": "jake",
   "zoneName": "piel",
-  "baseImage": "/characters/jake/base.png",
-  "maskImage": "/characters/jake/mask.png",
+  "baseImage": "./characters/jake/base.png",
+  "maskImage": "./characters/jake/mask.png",
   "target": {
     "h": 49,
     "s": 93,
