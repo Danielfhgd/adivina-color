@@ -9,6 +9,10 @@ export function initializePeer(onOpen) {
   }
 
   peerInstance = new Peer({
+    host: 'peerjs.metered.ca',
+    port: 443,
+    secure: true,
+    path: '/',
     config: {
       iceServers: [
         { urls: 'stun:stun.l.google.com:19302' },
