@@ -28,6 +28,7 @@ export default function ResultModal({
                 <h3>Tu Elección{!isMultiplayer && ` (${accuracy}%)`}</h3>
                 {challenge ? (
                   <MaskedCharacter
+                    key={challenge.id}
                     color={selectedColor}
                     characterName={challenge.characterName}
                     zoneName={challenge.zoneName}
@@ -51,6 +52,7 @@ export default function ResultModal({
                 <h3>Color Original</h3>
                 {challenge ? (
                   <MaskedCharacter
+                    key={challenge.id}
                     color={targetColor}
                     characterName={challenge.characterName}
                     zoneName={challenge.zoneName}

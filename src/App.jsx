@@ -569,6 +569,7 @@ export default function App() {
 
         <section className="game-grid">
           <MaskedCharacter
+            key={challenge.id}
             color={selectedColor}
             characterName={challenge.characterName}
             zoneName={challenge.zoneName}
