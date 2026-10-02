@@ -1,0 +1,19 @@
+{
+  "id": "superman",
+  "characterName": "superman",
+  "zoneName": "capa",
+  "baseImage": "./characters/superman/base.png",
+  "maskImage": "./characters/superman/mask.png",
+  "target": {
+    "h": 359,
+    "s": 85,
+    "l": 25
+  },
+  "targetRgb": {
+    "r": 120,
+    "g": 10,
+    "b": 12
+  },
+  "targetHex": "#780A0C",
+  "selectedPixels": 167727
+}
