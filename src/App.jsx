@@ -113,19 +113,20 @@ export default function App() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isMultiplayer, isHost]);
 
-  // Heartbeat / Ping-Pong: solo el Host verifica conexión del invitado
+// Heartbeat / Ping-Pong: solo el Host verifica conexión del invitado
   useEffect(() => {
     if (!isMultiplayer || !isHost) return;
 
     const sendPing = () => {
-      // REGLA 1: Si está solo en el lobby inicial, no hay timeout
-      if (screen === "lobby" && lobbyPlayers.length <= 1) {
-        pongReceivedRef.current = true; // Mantener vivo falsamente mientras espera
-        return;
+      // REGLA DE ORO DE SEGURIDAD:
+      // Si estamos en la pantalla de "lobby", "menu", "setup", o si la partida activa aún no ha comenzado formalmente con los jugadores listos, CANCELA EL TIMEOUT.
+      if (screen === "lobby" || screen === "menu" || screen === "setup" || lobbyPlayers.length <= 1) {
+        pongReceivedRef.current = true; // Forzar estado vivo de seguridad
+        return; // Salir silenciosamente sin disparar alertas
       }
 
-      // REGLA 2: Si ya inició la partida y se queda solo, se activa la expulsión inmediata
-      if (screen !== "lobby" && lobbyPlayers.length <= 1) {
+      // El sistema de expulsión estricto SOLO debe ejecutarse si ya estamos jugando en la pantalla "game" o "results" y alguien se sale
+      if (screen === "game" && lobbyPlayers.length <= 1) {
         if (heartbeatRef.current) clearInterval(heartbeatRef.current);
         alert("El invitado ha abandonado la sala.");
         handleLeaveLobby();
