@@ -8,10 +8,10 @@ export function initializePeer(onOpen) {
     peerInstance.destroy();
   }
 
-   peerInstance = new Peer({
-    host: "://peerjs.com",      // Servidor en la nube oficial de PeerJS
-    port: 443,                 // Puerto HTTPS seguro obligatorio para GitHub Pages
-    secure: true,              // Forzar encriptación SSL para pasar los Firewalls
+    peerInstance = new Peer({
+    host: "peerjs-signaling.metered.ca", // ← ESTA ES LA DIRECCIÓN REAL Y ACTIVA DE METERED
+    port: 443,                          // Puerto HTTPS seguro obligatorio para GitHub Pages
+    secure: true,                       // Forzar cifrado SSL para saltarse Firewalls
     path: "/",
     config: {
       iceServers: [
