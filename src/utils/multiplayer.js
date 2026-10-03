@@ -9,7 +9,7 @@ export function initializePeer(onOpen) {
   }
 
   peerInstance = new Peer({
-    host: "0.peerjs.com",
+    host: "://herokuapp.com",
     port: 443,
     secure: true,
     path: "/",
