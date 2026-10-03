@@ -12,7 +12,7 @@ export function initializePeer(onOpen) {
     host: "0.peerjs.com",       // Servidor oficial en la nube de PeerJS (Existente y activo)
     port: 443,                  // Puerto HTTPS seguro obligatorio para GitHub Pages
     secure: true,               // Forzar cifrado SSL contra bloqueos de red
-    path: "/peerjs",            // ← EL CAMBIO CLAVE: Cambiar '/' por '/peerjs' que es el oficial
+    path: "/",            
     config: {
       iceServers: [
         { urls: 'stun:://google.com' },
