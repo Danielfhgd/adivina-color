@@ -8,19 +8,17 @@ export function initializePeer(onOpen) {
     peerInstance.destroy();
   }
 
-    peerInstance = new Peer({
-    host: "://peerjs.com",       // Servidor oficial en la nube de PeerJS
+  peerInstance = new Peer({
+    host: "0.peerjs.com",       // Servidor oficial en la nube de PeerJS
     port: 443,                  // Puerto HTTPS seguro obligatorio para GitHub Pages
     secure: true,               // Forzar cifrado SSL contra bloqueos
-    path: "/",
+    path: "/",                  // Mantener la barra limpia para evitar duplicaciones
+    key: "peerjs",              // ← LA CLAVE CRÍTICA: Desbloquea la fila de espera del servidor
     config: {
-      // LISTA OFICIAL Y COMPATIBLE DE STUNS PÚBLICOS SIN ERRORES DE PARSEO
       iceServers: [
-        { urls: "stun:://google.com" },
-        { urls: "stun:://google.com" },
-        { urls: "stun:stun.mozilla.org" },
-        { urls: "stun:stun.ekiga.net" },
-        { urls: "stun:://ideasip.com" }
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" },
+        { urls: "stun:stun.mozilla.org" }
       ]
     }
   });
