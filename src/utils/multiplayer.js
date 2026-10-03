@@ -9,17 +9,23 @@ export function initializePeer(onOpen) {
   }
 
   peerInstance = new Peer({
-    host: "0.peerjs.com",       // Servidor oficial en la nube de PeerJS
-    port: 443,                  // Puerto HTTPS seguro obligatorio para GitHub Pages
-    secure: true,               // Forzar cifrado SSL contra bloqueos
-    path: "/",                  // Mantener la barra limpia para evitar duplicaciones
-    key: "peerjs",              // ← LA CLAVE CRÍTICA: Desbloquea la fila de espera del servidor
+    host: "0.peerjs.com",
+    port: 443,
+    secure: true,
+    path: "/",
+    key: "peerjs",
     config: {
+      // ESTA ES LA CONFIGURACIÓN OFICIAL COMPLETA PARA SALTARSE FIREWALLS ENTRE CASAS
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
         { urls: "stun:stun1.l.google.com:19302" },
-        { urls: "stun:stun.mozilla.org" }
-      ]
+        {
+          urls: "turn:0.peerjs.com:3478",
+          username: "peerjs",
+          credential: "peerjsp"
+        }
+      ],
+      sdpSemantics: "unified-plan"
     }
   });
 
