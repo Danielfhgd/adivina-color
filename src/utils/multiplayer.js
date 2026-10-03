@@ -8,18 +8,18 @@ export function initializePeer(onOpen) {
     peerInstance.destroy();
   }
 
-    peerInstance = new Peer({
-    host: "peerjs-signaling.metered.ca", // ← ESTA ES LA DIRECCIÓN REAL Y ACTIVA DE METERED
-    port: 443,                          // Puerto HTTPS seguro obligatorio para GitHub Pages
-    secure: true,                       // Forzar cifrado SSL para saltarse Firewalls
-    path: "/",
+     peerInstance = new Peer({
+    host: "0.peerjs.com",       // Servidor oficial en la nube de PeerJS (Existente y activo)
+    port: 443,                  // Puerto HTTPS seguro obligatorio para GitHub Pages
+    secure: true,               // Forzar cifrado SSL contra bloqueos de red
+    path: "/peerjs",            // ← EL CAMBIO CLAVE: Cambiar '/' por '/peerjs' que es el oficial
     config: {
       iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' },
-        { urls: 'stun:stun3.l.google.com:19302' },
-        { urls: 'stun:stun4.l.google.com:19302' }
+        { urls: 'stun:://google.com' },
+        { urls: 'stun:://google.com' },
+        { urls: 'stun:://google.com' },
+        { urls: 'stun:://google.com' },
+        { urls: 'stun:://google.com' }
       ]
     }
   });
