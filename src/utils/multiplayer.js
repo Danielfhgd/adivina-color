@@ -9,25 +9,18 @@ export function initializePeer(onOpen) {
   }
 
     peerInstance = new Peer({
-    host: "0.peerjs.com",       // Servidor oficial en la nube de PeerJS
+    host: "://peerjs.com",       // Servidor oficial en la nube de PeerJS
     port: 443,                  // Puerto HTTPS seguro obligatorio para GitHub Pages
     secure: true,               // Forzar cifrado SSL contra bloqueos
     path: "/",
     config: {
-      // INYECTAMOS EL PLAN GRATUITO GLOBAL DE SERVIDORES STUN Y TURN DE OPEN RELAY
+      // LISTA OFICIAL Y COMPATIBLE DE STUNS PÚBLICOS SIN ERRORES DE PARSEO
       iceServers: [
-        { urls: "stun:openrelay.metered.ca:80" },
-        { urls: "stun:openrelay.metered.ca:443" },
-        {
-          urls: "turn:openrelay.metered.ca:80",
-          username: "openrelayproject",
-          credential: "openrelayproject"
-        },
-        {
-          urls: "turn:openrelay.metered.ca:443?transport=tcp",
-          username: "openrelayproject",
-          credential: "openrelayproject"
-        }
+        { urls: "stun:://google.com" },
+        { urls: "stun:://google.com" },
+        { urls: "stun:stun.mozilla.org" },
+        { urls: "stun:stun.ekiga.net" },
+        { urls: "stun:://ideasip.com" }
       ]
     }
   });
