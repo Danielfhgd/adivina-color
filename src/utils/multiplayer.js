@@ -41,8 +41,8 @@ export function initializePeer(onOpen) {
     });
 
     peerInstance.on("open", (id) => {
-      if (onOpenCallback) {
-        onOpenCallback(id); // <--- AQUÍ SE DISPARA EL CALLBACK QUE CAMBIA LA PANTALLA
+      if (onOpen) {
+        onOpen(id); // <--- CORREGIDO: era onOpenCallback, ahora usa el parámetro correcto
       }
     });
 
