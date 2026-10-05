@@ -41,12 +41,13 @@ export function initializePeer(onOpen) {
     });
 
     peerInstance.on("open", (id) => {
-      console.log("ID de sala generado con éxito:", id);
-      if (onOpen) onOpen(id);
+      if (onOpenCallback) {
+        onOpenCallback(id); // <--- AQUÍ SE DISPARA EL CALLBACK QUE CAMBIA LA PANTALLA
+      }
     });
 
     peerInstance.on("error", (err) => {
-      console.error("Error en el objeto Peer:", err);
+      console.error("Error en conexión PeerJS:", err);
     });
 
   } catch (error) {

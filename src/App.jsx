@@ -113,7 +113,7 @@ export default function App() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isMultiplayer, isHost]);
 
-// Heartbeat / Ping-Pong: solo el Host verifica conexión del invitado
+  // Heartbeat / Ping-Pong: solo el Host verifica conexión del invitado
   useEffect(() => {
     if (!isMultiplayer || !isHost) return;
 
@@ -176,17 +176,24 @@ export default function App() {
 
   // MULTI - Crear Sala (Host)
   function handleStartMultiplayerHost() {
+    console.log("Creando sala...");
     const cleanName = playerName.trim() || "Anfitrión";
     setPlayerName(cleanName);
     setIsMultiplayer(true);
     setIsHost(true);
 
     initializePeer((id) => {
+      // Usamos 'id' (el parámetro que devuelve el callback) y no 'roomId'
+      console.log("La sala ha sido creada exitosamente con el ID:", id);
       setRoomId(id);
+
       const hostPlayer = { id, name: cleanName, isHost: true, score: 0 };
       const initialList = [hostPlayer];
+
       setLobbyPlayers(initialList);
       hostStateRef.current.players = initialList;
+
+      // Cambiamos la pantalla al Lobby una vez que el ID existe
       setScreen("lobby");
     });
 
@@ -194,11 +201,18 @@ export default function App() {
       (connection) => {
         connection.on("close", () => {
           const peerId = connection.peer;
-          const foundPlayer = lobbyPlayers.find(p => p.id === peerId);
+          const foundPlayer = lobbyPlayers.find((p) => p.id === peerId);
           const playerName = foundPlayer ? foundPlayer.name : "Jugador";
-          setLobbyPlayers(prev => prev.filter(p => p.id !== peerId));
-          hostStateRef.current.players = hostStateRef.current.players.filter(p => p.id !== peerId);
-          broadcastMessage({ type: "PLAYER_DISCONNECTED", playerId: peerId, playerName });
+
+          setLobbyPlayers((prev) => prev.filter((p) => p.id !== peerId));
+          hostStateRef.current.players = hostStateRef.current.players.filter(
+            (p) => p.id !== peerId
+          );
+          broadcastMessage({
+            type: "PLAYER_DISCONNECTED",
+            playerId: peerId,
+            playerName,
+          });
         });
       },
       (data, senderPeerId) => {
