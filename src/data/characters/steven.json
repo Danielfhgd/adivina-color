@@ -4,16 +4,10 @@
   "zoneName": "camisa",
   "baseImage": "./characters/steven/base.png",
   "maskImage": "./characters/steven/mask.png",
-  "target": {
-    "h": 354,
-    "s": 100,
-    "l": 69
-  },
-  "targetRgb": {
+  "selectedPixels": 460305,
+  "targetColor": {
     "r": 255,
     "g": 96,
     "b": 112
-  },
-  "targetHex": "#FF6070",
-  "selectedPixels": 460305
+  }
 }

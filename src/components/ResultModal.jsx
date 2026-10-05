@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MaskedCharacter from "./MaskedCharacter";
-import { hslToCss } from "../utils/color";
+import { rgbToCss } from "../utils/color";
 
 export default function ResultModal({
   accuracy,
@@ -41,7 +41,7 @@ export default function ResultModal({
                 <div className="color-tag">
                   <span
                     className="mini-swatch"
-                    style={{ backgroundColor: hslToCss(selectedColor) }}
+                    style={{ backgroundColor: rgbToCss(selectedColor) }}
                   />
                   <small>Color Elegido</small>
                 </div>
@@ -65,7 +65,7 @@ export default function ResultModal({
                 <div className="color-tag">
                   <span
                     className="mini-swatch"
-                    style={{ backgroundColor: hslToCss(targetColor) }}
+                    style={{ backgroundColor: rgbToCss(targetColor) }}
                   />
                   <small>Color Objetivo</small>
                 </div>
@@ -108,7 +108,7 @@ export default function ResultModal({
                         <td>
                           <span
                             className="mini-swatch"
-                            style={{ backgroundColor: hslToCss(player.color) }}
+                            style={{ backgroundColor: rgbToCss(player.color) }}
                           />
                         </td>
                       </tr>

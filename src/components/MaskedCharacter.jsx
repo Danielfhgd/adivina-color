@@ -1,4 +1,4 @@
-import { hslToCss } from "../utils/color";
+import { rgbToCss } from "../utils/color";
 
 export default function MaskedCharacter({
   color,
@@ -7,7 +7,7 @@ export default function MaskedCharacter({
   baseImage,
   maskImage,
 }) {
-  const selectedColor = hslToCss(color);
+  const selectedColor = rgbToCss(color);
 
   // Fix image paths for GitHub Pages / Vite BASE_URL
   const cleanBasePath = baseImage.replace(/^\.\//, '');

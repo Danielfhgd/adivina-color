@@ -1,27 +1,27 @@
 const controls = [
   {
-    key: "h",
-    label: "Tono",
-    unit: "°",
+    key: "r",
+    label: "Rojo",
+    unit: "",
     min: 0,
-    max: 360,
-    className: "hue-range",
+    max: 255,
+    className: "red-range",
   },
   {
-    key: "s",
-    label: "Saturación",
-    unit: "%",
+    key: "g",
+    label: "Verde",
+    unit: "",
     min: 0,
-    max: 100,
-    className: "saturation-range",
+    max: 255,
+    className: "green-range",
   },
   {
-    key: "l",
-    label: "Luminosidad",
-    unit: "%",
+    key: "b",
+    label: "Azul",
+    unit: "",
     min: 0,
-    max: 100,
-    className: "lightness-range",
+    max: 255,
+    className: "blue-range",
   },
 ];
 
@@ -41,8 +41,9 @@ export default function ColorControls({
     <section
       className="controls-card"
       style={{
-        "--selected-hue": color.h,
-        "--selected-saturation": `${color.s}%`,
+        "--selected-r": color.r,
+        "--selected-g": color.g,
+        "--selected-b": color.b,
       }}
     >
       <div className="controls-heading">

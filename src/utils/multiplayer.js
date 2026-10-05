@@ -9,21 +9,32 @@ export function initializePeer(onOpen) {
   }
 
   peerInstance = new Peer({
-    host: "://herokuapp.com",
-    port: 443,
-    secure: true,
-    path: "/",
-    key: "peerjs",
     config: {
-      // ESTA ES LA CONFIGURACIÓN OFICIAL COMPLETA PARA SALTARSE FIREWALLS ENTRE CASAS
+      // Pega aquí la lista exacta de iceServers que te dio Metered.ca
       iceServers: [
-        { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" },
         {
-          urls: "turn:0.peerjs.com:3478",
-          username: "peerjs",
-          credential: "peerjsp"
-        }
+          urls: "stun:stun.relay.metered.ca:80",
+        },
+        {
+          urls: "turn:global.relay.metered.ca:80",
+          username: "3e3fed6870ed92db3ae7d228",
+          credential: "TvtZmp5UctYry9td",
+        },
+        {
+          urls: "turn:global.relay.metered.ca:80?transport=tcp",
+          username: "3e3fed6870ed92db3ae7d228",
+          credential: "TvtZmp5UctYry9td",
+        },
+        {
+          urls: "turn:global.relay.metered.ca:443",
+          username: "3e3fed6870ed92db3ae7d228",
+          credential: "TvtZmp5UctYry9td",
+        },
+        {
+          urls: "turns:global.relay.metered.ca:443?transport=tcp",
+          username: "3e3fed6870ed92db3ae7d228",
+          credential: "TvtZmp5UctYry9td",
+        },
       ],
       sdpSemantics: "unified-plan"
     }
@@ -31,6 +42,10 @@ export function initializePeer(onOpen) {
 
   peerInstance.on("open", (id) => {
     if (onOpen) onOpen(id);
+  });
+
+  peerInstance.on("error", (err) => {
+    console.error("Error en PeerJS:", err.type, err);
   });
 
   return peerInstance;

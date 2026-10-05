@@ -4,16 +4,10 @@
   "zoneName": "cabello",
   "baseImage": "./characters/rick/base.png",
   "maskImage": "./characters/rick/mask.png",
-  "target": {
-    "h": 198,
-    "s": 56,
-    "l": 80
-  },
-  "targetRgb": {
+  "selectedPixels": 18185,
+  "targetColor": {
     "r": 174,
     "g": 215,
     "b": 232
-  },
-  "targetHex": "#AED7E8",
-  "selectedPixels": 18185
+  }
 }

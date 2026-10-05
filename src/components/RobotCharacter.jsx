@@ -1,7 +1,7 @@
-import { hslToCss } from "../utils/color";
+import { rgbToCss } from "../utils/color";
 
 export default function RobotCharacter({ color, characterName, zoneName }) {
-  const selectedColor = hslToCss(color);
+  const selectedColor = rgbToCss(color);
 
   return (
     <section className="character-card">

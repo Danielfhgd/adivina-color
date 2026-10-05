@@ -9,7 +9,7 @@ import ResultModal from "./components/ResultModal";
 import GameSummary from "./components/GameSummary";
 import CharacterEditor from "./components/CharacterEditor";
 import { CHALLENGES } from "./data/challenges";
-import { calculateAccuracy } from "./utils/color";
+import { calculateAccuracy, rgbToCss } from "./utils/color";
 import {
   initializePeer,
   connectToHost,
@@ -18,7 +18,7 @@ import {
   disconnectPeer,
 } from "./utils/multiplayer";
 
-const INITIAL_COLOR = { h: 0, s: 50, l: 50 };
+const INITIAL_COLOR = { r: 128, g: 128, b: 128 };
 
 function getRandomChallenge(currentId = null, usedIds = []) {
   const usedSet = new Set(usedIds);
@@ -69,7 +69,7 @@ export default function App() {
     challenge: null,
   });
 
-  const targetColor = useMemo(() => challenge.target, [challenge]);
+  const targetColor = useMemo(() => challenge.targetColor, [challenge]);
 
   // Temporizador centralizado
   useEffect(() => {

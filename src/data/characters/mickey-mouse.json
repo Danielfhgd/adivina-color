@@ -4,16 +4,10 @@
   "zoneName": "short",
   "baseImage": "./characters/mickey-mouse/base.png",
   "maskImage": "./characters/mickey-mouse/mask.png",
-  "target": {
-    "h": 360,
-    "s": 99,
-    "l": 49
-  },
-  "targetRgb": {
+  "selectedPixels": 19843,
+  "targetColor": {
     "r": 250,
     "g": 1,
     "b": 2
-  },
-  "targetHex": "#FA0102",
-  "selectedPixels": 19843
+  }
 }

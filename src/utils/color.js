@@ -1,36 +1,56 @@
-export function hslToCss({ h, s, l }) {
-  return `hsl(${h} ${s}% ${l}%)`;
+export function rgbToCss({ r, g, b }) {
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
-function getCircularHueDifference(firstHue, secondHue) {
-  const difference = Math.abs(firstHue - secondHue);
-  return difference > 180 ? 360 - difference : difference;
+function calculateChannel(userVal, targetVal) {
+  if (userVal === targetVal) return 100;
+  if (userVal < targetVal) {
+    return userVal * (100 / targetVal);
+  } else {
+    const maxDer = 255 - targetVal;
+    return (maxDer - (userVal - targetVal)) * (100 / maxDer);
+  }
 }
 
-export function calculateAccuracy(colorTarget, colorUser) {
-  // 1. Calcular diferencias absolutas tomando en cuenta que Hue es circular (0-360)
-  let dH = Math.abs(colorTarget.h - colorUser.h);
-  if (dH > 180) dH = 360 - dH;
+export function calculateAccuracy(usuario, objetivo) {
+  const u = usuario && typeof usuario === 'object' ? usuario : { r: 128, g: 128, b: 128 };
+  const t = objetivo && typeof objetivo === 'object' ? objetivo : { r: 128, g: 128, b: 128 };
 
-  // Normalizar diferencias individuales (todas a escala 0.0 - 1.0)
-  const hError = dH / 180;
-  const sError = Math.abs(colorTarget.s - colorUser.s) / 100;
-  const lError = Math.abs(colorTarget.l - colorUser.l) / 100;
+  const calcularCanal = (valUser, targetVal) => {
+    if (valUser === targetVal) return 100;
+    
+    // TRAMO 1: El usuario se quedó CORTO (Izquierda) - Ecuación original de Andre
+    if (valUser < targetVal) {
+      if (targetVal === 0) return 0;
+      return valUser * (100 / targetVal);
+    } 
+    
+    // TRAMO 2: El usuario se PASÓ (Derecha) - La fórmula cómoda corregida de Andre
+    else {
+      const maxDerecha = 255 - targetVal;
+      if (maxDerecha === 0) return 0;
+      
+      const distanciaAlPuntoDulce = valUser - targetVal;
+      const pasosRestantesAPared = maxDerecha - distanciaAlPuntoDulce; // 135 - 80 = 55
+      
+      return pasosRestantesAPared * (100 / maxDerecha);
+    }
+  };
 
-  // 2. Calcular error geométrico usando distancia euclidiana ponderada
-  // Le damos un peso equilibrado: 50% al Tono, 25% a Saturación y 25% a Luminosidad
-  const totalError = Math.sqrt(
-    Math.pow(hError, 2) * 0.50 +
-    Math.pow(sError, 2) * 0.25 +
-    Math.pow(lError, 2) * 0.25
-  );
+  const pctR = calcularCanal(u.r, t.r);
+  const pctG = calcularCanal(u.g, t.g);
+  const pctB = calcularCanal(u.b, t.b);
 
-  // 3. Aplicar una curva de penalización exponencial suave (exponente 2.2)
-  // Esto permite que colores cercanos reciban puntuación justa y motivadora
-  // manteniendo penalizados los colores aleatorios.
-  const accuracy = 100 * Math.pow(Math.max(0, 1 - totalError), 2.2);
+  // Regla de Andre: Sumamos los 3 canales (0-300%)
+  const sumaPorcentajes = pctR + pctG + pctB;
+  const promedioBase = (sumaPorcentajes / 300) * 100;
 
-  return Math.round(accuracy);
+  // EL TOQUE SECRETO DE DIFICULTAD:
+  // Elevamos la nota base a una potencia exponencial (2.2) para que las diferencias 
+  // visuales grandes (como el gris contra el rosa) tiren el puntaje hacia abajo de forma justa.
+  const precisionConCurva = Math.pow(promedioBase / 100, 2.2) * 100;
+  
+  return parseFloat(precisionConCurva.toFixed(2));
 }
 
 export function getScoreMessage(accuracy) {

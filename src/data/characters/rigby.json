@@ -4,16 +4,10 @@
   "zoneName": "piel",
   "baseImage": "./characters/rigby/base.png",
   "maskImage": "./characters/rigby/mask.png",
-  "target": {
-    "h": 32,
-    "s": 31,
-    "l": 43
-  },
-  "targetRgb": {
+  "selectedPixels": 13537,
+  "targetColor": {
     "r": 143,
     "g": 112,
     "b": 76
-  },
-  "targetHex": "#8F704C",
-  "selectedPixels": 13537
+  }
 }

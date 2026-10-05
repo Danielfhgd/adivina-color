@@ -4,16 +4,10 @@
   "zoneName": "esfera de chicles",
   "baseImage": "./characters/benson/base.png",
   "maskImage": "./characters/benson/mask.png",
-  "target": {
-    "h": 329,
-    "s": 38,
-    "l": 61
-  },
-  "targetRgb": {
+  "selectedPixels": 24679,
+  "targetColor": {
     "r": 193,
     "g": 116,
     "b": 156
-  },
-  "targetHex": "#C1749C",
-  "selectedPixels": 24679
+  }
 }

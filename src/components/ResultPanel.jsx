@@ -1,4 +1,4 @@
-import { hslToCss, getScoreMessage } from "../utils/color";
+import { rgbToCss, getScoreMessage } from "../utils/color";
 
 export default function ResultPanel({
   accuracy,
@@ -7,8 +7,8 @@ export default function ResultPanel({
   challenge,
   onNextRound,
 }) {
-  const userColorCss = hslToCss(selectedColor);
-  const targetColorCss = hslToCss(targetColor);
+  const userColorCss = rgbToCss(selectedColor);
+  const targetColorCss = rgbToCss(targetColor);
 
   // Fix image paths for GitHub Pages / Vite BASE_URL
   const cleanBasePath = challenge.baseImage.replace(/^\.\//, '');
@@ -43,7 +43,7 @@ export default function ResultPanel({
             />
           </div>
           <small>
-            HSL({selectedColor.h}°, {selectedColor.s}%, {selectedColor.l}%)
+            RGB({selectedColor.r}, {selectedColor.g}, {selectedColor.b})
           </small>
         </div>
 
@@ -66,7 +66,7 @@ export default function ResultPanel({
             />
           </div>
           <small>
-            HSL({targetColor.h}°, {targetColor.s}%, {targetColor.l}%)
+            RGB({targetColor.r}, {targetColor.g}, {targetColor.b})
           </small>
         </div>
       </div>

@@ -1326,82 +1326,43 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
-/* Track - Hue: Rainbow gradient */
-
-.hue-range::-webkit-slider-runnable-track {
+/* Track - Red: Black to pure red */
+.red-range::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    hsl(0, 100%, 50%),
-    hsl(60, 100%, 50%),
-    hsl(120, 100%, 50%),
-    hsl(180, 100%, 50%),
-    hsl(240, 100%, 50%),
-    hsl(300, 100%, 50%),
-    hsl(360, 100%, 50%)
-  );
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(255, 0, 0));
 }
 
-.hue-range::-moz-range-track {
+.red-range::-moz-range-track {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    hsl(0, 100%, 50%),
-    hsl(60, 100%, 50%),
-    hsl(120, 100%, 50%),
-    hsl(180, 100%, 50%),
-    hsl(240, 100%, 50%),
-    hsl(300, 100%, 50%),
-    hsl(360, 100%, 50%)
-  );
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(255, 0, 0));
 }
 
-/* Track - Saturation: Gray to full color */
-
-.saturation-range::-webkit-slider-runnable-track {
+/* Track - Green: Black to pure green */
+.green-range::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    hsl(var(--selected-hue), 0%, 50%),
-    hsl(var(--selected-hue), 100%, 50%)
-  );
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(0, 255, 0));
 }
 
-.saturation-range::-moz-range-track {
+.green-range::-moz-range-track {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    hsl(var(--selected-hue), 0%, 50%),
-    hsl(var(--selected-hue), 100%, 50%)
-  );
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(0, 255, 0));
 }
 
-/* Track - Lightness: Black to white through color */
-
-.lightness-range::-webkit-slider-runnable-track {
+/* Track - Blue: Black to pure blue */
+.blue-range::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    hsl(var(--selected-hue), var(--selected-saturation), 0%),
-    hsl(var(--selected-hue), var(--selected-saturation), 50%),
-    hsl(var(--selected-hue), var(--selected-saturation), 100%)
-  );
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(0, 0, 255));
 }
 
-.lightness-range::-moz-range-track {
+.blue-range::-moz-range-track {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    hsl(var(--selected-hue), var(--selected-saturation), 0%),
-    hsl(var(--selected-hue), var(--selected-saturation), 50%),
-    hsl(var(--selected-hue), var(--selected-saturation), 100%)
-  );
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(0, 0, 255));
 }
 
 /* Focus visible for sliders */
