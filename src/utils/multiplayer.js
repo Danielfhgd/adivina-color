@@ -7,46 +7,51 @@ export function initializePeer(onOpen) {
   if (peerInstance) {
     peerInstance.destroy();
   }
+  try {
+    peerInstance = new Peer({
+      config: {
+        // Pega aquí la lista exacta de iceServers que te dio Metered.ca
+        iceServers: [
+          {
+            urls: "stun:stun.relay.metered.ca:80",
+          },
+          {
+            urls: "turn:global.relay.metered.ca:80",
+            username: "3e3fed6870ed92db3ae7d228",
+            credential: "TvtZmp5UctYry9td",
+          },
+          {
+            urls: "turn:global.relay.metered.ca:80?transport=tcp",
+            username: "3e3fed6870ed92db3ae7d228",
+            credential: "TvtZmp5UctYry9td",
+          },
+          {
+            urls: "turn:global.relay.metered.ca:443",
+            username: "3e3fed6870ed92db3ae7d228",
+            credential: "TvtZmp5UctYry9td",
+          },
+          {
+            urls: "turns:global.relay.metered.ca:443?transport=tcp",
+            username: "3e3fed6870ed92db3ae7d228",
+            credential: "TvtZmp5UctYry9td",
+          },
+        ],
+        sdpSemantics: "unified-plan"
+      }
+    });
 
-  peerInstance = new Peer({
-    config: {
-      // Pega aquí la lista exacta de iceServers que te dio Metered.ca
-      iceServers: [
-        {
-          urls: "stun:stun.relay.metered.ca:80",
-        },
-        {
-          urls: "turn:global.relay.metered.ca:80",
-          username: "3e3fed6870ed92db3ae7d228",
-          credential: "TvtZmp5UctYry9td",
-        },
-        {
-          urls: "turn:global.relay.metered.ca:80?transport=tcp",
-          username: "3e3fed6870ed92db3ae7d228",
-          credential: "TvtZmp5UctYry9td",
-        },
-        {
-          urls: "turn:global.relay.metered.ca:443",
-          username: "3e3fed6870ed92db3ae7d228",
-          credential: "TvtZmp5UctYry9td",
-        },
-        {
-          urls: "turns:global.relay.metered.ca:443?transport=tcp",
-          username: "3e3fed6870ed92db3ae7d228",
-          credential: "TvtZmp5UctYry9td",
-        },
-      ],
-      sdpSemantics: "unified-plan"
-    }
-  });
+    peerInstance.on("open", (id) => {
+      console.log("ID de sala generado con éxito:", id);
+      if (onOpen) onOpen(id);
+    });
 
-  peerInstance.on("open", (id) => {
-    if (onOpen) onOpen(id);
-  });
+    peerInstance.on("error", (err) => {
+      console.error("Error en el objeto Peer:", err);
+    });
 
-  peerInstance.on("error", (err) => {
-    console.error("Error en PeerJS:", err.type, err);
-  });
+  } catch (error) {
+    console.error("Error al instanciar Peer:", error);
+  }
 
   return peerInstance;
 }
