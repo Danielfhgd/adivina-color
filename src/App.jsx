@@ -9,7 +9,7 @@ import ResultModal from "./components/ResultModal";
 import GameSummary from "./components/GameSummary";
 import CharacterEditor from "./components/CharacterEditor";
 import { CHALLENGES } from "./data/challenges";
-import { calculateAccuracy, rgbToCss } from "./utils/color";
+import { calculateAccuracy } from "./utils/color";
 import {
   initializePeer,
   connectToHost,

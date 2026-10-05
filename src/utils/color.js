@@ -1,40 +1,47 @@
 export function rgbToCss({ r, g, b }) {
-  return `rgb(${r}, ${g}, ${b})`;
+  return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
 }
 
-function calculateChannel(userVal, targetVal) {
+function andreChannel(userVal, targetVal) {
   if (userVal === targetVal) return 100;
+
   if (userVal < targetVal) {
+    // CASO A: Se quedó corto (lado 0 → puntoDulce)
+    // Distancia máxima = targetVal
+    // Cada punto vale 100 / targetVal %
+    // Usuario está en userVal → userVal * (100/targetVal)
+    if (targetVal === 0) return 0;
     return userVal * (100 / targetVal);
   } else {
+    // CASO B: Se pasó (lado puntoDulce → 255)
+    // Distancia máxima = 255 - targetVal
+    // Cada punto vale 100 / (255 - targetVal) %
+    // Se pasó (userVal - targetVal) puntos
+    // Porcentaje de exceso = (userVal - targetVal) * (100 / (255 - targetVal))
+    // Acierto = 100 - exceso
     const maxDer = 255 - targetVal;
-    return (maxDer - (userVal - targetVal)) * (100 / maxDer);
+    if (maxDer === 0) return 0;
+    const exceso = (userVal - targetVal) * (100 / maxDer);
+    return Math.max(0, 100 - exceso);
   }
 }
 
 export function calculateAccuracy(usuario, objetivo) {
-  // ESCUDO DE SEGURIDAD: Evitar que el juego explote si los datos llegan vacíos
   const u = usuario && typeof usuario === 'object' ? usuario : { r: 128, g: 128, b: 128 };
   const t = objetivo && typeof objetivo === 'object' ? objetivo : { r: 128, g: 128, b: 128 };
 
-  // 1. Calculamos la distancia geométrica real en un espacio 3D (Teorema de Pitágoras tridimensional)
-  const diffR = u.r - t.r;
-  const diffG = u.g - t.g;
-  const diffB = u.b - t.b;
-  
-  const distanciaReal = Math.sqrt(diffR * diffR + diffG * diffG + diffB * diffB);
+  const pctR = andreChannel(u.r, t.r);
+  const pctG = andreChannel(u.g, t.g);
+  const pctB = andreChannel(u.b, t.b);
 
-  // 2. La distancia máxima posible en el espacio RGB (desde el negro 0,0,0 al blanco 255,255,255) es ~441.67
-  const distanciaMaxima = Math.sqrt(255 * 255 + 255 * 255 + 255 * 255);
+  // Regla de Andre: sumar 3 canales (0-300%) y dividir entre 300
+  const sumaPorcentajes = pctR + pctG + pctB;
+  const promedioBase = (sumaPorcentajes / 300) * 100;
 
-  // 3. El porcentaje de precisión es la diferencia lineal limpia respecto al total
-  // Si la distancia es 0 (colores idénticos), da 100%. 
-  // Si están muy cerca (como el short de Mickey), te dará entre 94% y 99%.
-  // Si están muy lejos (como el gris contra el rosa de Steven), te dará un puntaje bajo y justo.
-  const precisionFinal = (1 - distanciaReal / distanciaMaxima) * 100;
+  // Curva de dificultad (pow 2.2)
+  const precisionConCurva = Math.pow(promedioBase / 100, 2.2) * 100;
 
-  // Devolvemos el resultado limpio con máximo dos decimales
-  return parseFloat(Math.max(0, Math.min(100, precisionFinal)).toFixed(2));
+  return parseFloat(precisionConCurva.toFixed(2));
 }
 
 export function getScoreMessage(accuracy) {

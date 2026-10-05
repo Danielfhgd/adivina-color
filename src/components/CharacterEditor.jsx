@@ -439,8 +439,7 @@ setErrorMessage("");
         zoneName: zoneName.trim() || "zona recoloreable",
         baseImage: `/characters/${safeId}/base.png`,
         maskImage: `/characters/${safeId}/mask.png`,
-        target: representativeColor.hsl,
-        targetRgb: {
+        targetColor: {
           r: representativeColor.r,
           g: representativeColor.g,
           b: representativeColor.b,

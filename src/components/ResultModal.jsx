@@ -12,8 +12,7 @@ export default function ResultModal({
   roundRanking = [],
   onNextRound,
 }) {
-  // Inicializa siempre en la vista de comparación de personajes
-  const [step, setStep] = useState("character"); 
+  const [step, setStep] = useState("character");
 
   return (
     <div className="modal-overlay">
