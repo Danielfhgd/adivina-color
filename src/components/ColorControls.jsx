@@ -54,7 +54,11 @@ export default function ColorControls({
         <span className="live-badge">EN VIVO</span>
       </div>
 
-      <div className="sliders">
+      <div className="sliders" style={{
+        "--r": color.r,
+        "--g": color.g,
+        "--b": color.b,
+      }}>
         {controls.map((control) => (
           <label className="slider-group" key={control.key}>
             <span className="slider-topline">

@@ -500,160 +500,171 @@ setErrorMessage("");
           </div>
         </section>
 
-        <section className="editor-workspace">
-          <div className="canvas-panel source-panel">
-            <div className="panel-heading">
-              <div>
-                <p className="section-label">1. Imagen original</p>
-                <h2>Marca la zona por colores</h2>
-              </div>
+<section className="editor-workspace">
+           <div className="canvas-panel source-panel">
+             <div className="panel-heading">
+               {imageInfo && (
+                 <span className="image-info">
+                   {imageInfo.width} × {imageInfo.height}px
+                 </span>
+               )}
+             </div>
 
-              {imageInfo && (
-                <span className="image-info">
-                  {imageInfo.width} × {imageInfo.height}px
-                </span>
-              )}
-            </div>
+             <div className="canvas-wrapper" style={{ position: 'relative' }}>
+               <canvas
+                 ref={sourceCanvasRef}
+                 className="character-editor-canvas"
+                 onClick={handleCanvasClick}
+                 style={{ display: imageInfo ? 'block' : 'none' }}
+               />
 
-            <label className="file-picker">
-              <span>Subir imagen del personaje</span>
-              <input
-                type="file"
-                accept="image/png,image/jpeg,image/webp"
-                onChange={handleFileChange}
-              />
-            </label>
+               {imageInfo && samples.map((sample, index) => (
+                 <span
+                   className="sample-marker"
+                   key={sample.id}
+                   style={{
+                     left: `${(sample.x / imageInfo.width) * 100}%`,
+                     top: `${(sample.y / imageInfo.height) * 100}%`,
+                   }}
+                   title={`Muestra ${index + 1}: ${sample.hex}`}
+                 >
+                   {index + 1}
+                 </span>
+               ))}
 
-            {!imageInfo && (
-              <div className="empty-canvas-message">
-                <span>+</span>
-                <p>Selecciona una imagen PNG, JPG o WEBP para empezar.</p>
-              </div>
-            )}
+               {!imageInfo && (
+                 <label className="file-picker empty-canvas-message"
+                   style={{ 
+                     display: 'flex', 
+                     width: '100%', 
+                     height: '100%',
+                     minHeight: '320px',
+                     position: 'absolute',
+                     top: 0,
+                     left: 0,
+                     zIndex: 10
+                   }}
+                   onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                   onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                   onDrop={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     const file = e.dataTransfer.files?.[0];
+                     if (file) handleFileChange({ target: { files: [file] } });
+                   }}
+                 >
+                   <span>+</span>
+                   <p>Selecciona una imagen PNG, JPG o WEBP para empezar.</p>
+                   <input
+                     type="file"
+                     accept="image/png,image/jpeg,image/webp"
+                     onChange={handleFileChange}
+                   />
+                 </label>
+               )}
+             </div>
 
-            <div
-              className={`canvas-wrapper ${imageInfo ? "has-image" : ""}`}
-            >
-              <canvas
-                ref={sourceCanvasRef}
-                className="character-editor-canvas"
-                onClick={handleCanvasClick}
-              />
+             {imageInfo && (
+               <p className="canvas-help">
+                 Haz clic en tonos centrales de la zona. Para un bolso con luces y
+                 sombras, añade una muestra clara, una media y una oscura.
+               </p>
+             )}
+           </div>
 
-              {samples.map((sample, index) => (
-                <span
-                  className="sample-marker"
-                  key={sample.id}
-                  style={{
-                    left: `${(sample.x / imageInfo.width) * 100}%`,
-                    top: `${(sample.y / imageInfo.height) * 100}%`,
-                  }}
-                  title={`Muestra ${index + 1}: ${sample.hex}`}
-                >
-                  {index + 1}
-                </span>
-              ))}
-            </div>
+           <aside className="selection-controls-panel" style={{ display: imageInfo ? 'block' : 'none' }}>
+               <p className="section-label">2. Configuración</p>
+               <h2>Selecciona y genera</h2>
 
-            <p className="canvas-help">
-              Haz clic en tonos centrales de la zona. Para un bolso con luces y
-              sombras, añade una muestra clara, una media y una oscura.
-            </p>
-          </div>
+               <div className="tolerance-control">
+                 <div className="tolerance-heading">
+                   <label htmlFor="tolerance">Tolerancia de color</label>
+                   <output>{tolerance}</output>
+                 </div>
 
-          <aside className="selection-controls-panel">
-            <p className="section-label">2. Configuración</p>
-            <h2>Selecciona y genera</h2>
+                 <input
+                   id="tolerance"
+                   type="range"
+                   min="5"
+                   max="180"
+                   value={tolerance}
+                   onChange={(event) => {
+   setTolerance(Number(event.target.value));
+   setSelectedPixels(null);
+   setRepresentativeColor(null);
+   setGeneratedMaskImageData(null);
+   setGeneratedBaseImageData(null);
+ }}
+                 />
 
-            <div className="tolerance-control">
-              <div className="tolerance-heading">
-                <label htmlFor="tolerance">Tolerancia de color</label>
-                <output>{tolerance}</output>
-              </div>
+                 <p>
+                   Baja: más preciso, puede dejar huecos. Alta: cubre más tonos,
+                   pero puede tomar zonas no deseadas.
+                 </p>
+               </div>
 
-              <input
-                id="tolerance"
-                type="range"
-                min="5"
-                max="180"
-                value={tolerance}
-                onChange={(event) => {
-  setTolerance(Number(event.target.value));
-  setSelectedPixels(null);
-  setRepresentativeColor(null);
-  setGeneratedMaskImageData(null);
-  setGeneratedBaseImageData(null);
-}}
-              />
+               <div className="samples-list">
+                 <div className="samples-list-heading">
+                   <strong>Muestras agregadas</strong>
+                   <span>{samples.length}</span>
+                 </div>
 
-              <p>
-                Baja: más preciso, puede dejar huecos. Alta: cubre más tonos,
-                pero puede tomar zonas no deseadas.
-              </p>
-            </div>
+                 {samples.length === 0 ? (
+                   <p className="samples-empty">
+                     Aún no hay muestras. Haz clic en la imagen.
+                   </p>
+                 ) : (
+                   samples.map((sample, index) => (
+                     <div className="sample-list-item" key={sample.id}>
+                       <span
+                         className="sample-dot"
+                         style={{ backgroundColor: sample.hex }}
+                       />
+                       <div>
+                         <strong>Muestra {index + 1}</strong>
+                         <small>
+                           {sample.hex} · HSL({sample.hsl.h}°, {sample.hsl.s}%,
+                           {" "}{sample.hsl.l}%)
+                         </small>
+                       </div>
+                     </div>
+                   ))
+                 )}
+               </div>
 
-            <div className="samples-list">
-              <div className="samples-list-heading">
-                <strong>Muestras agregadas</strong>
-                <span>{samples.length}</span>
-              </div>
+               <div className="editor-action-stack">
+                 <button
+                   className="primary-button"
+                   onClick={generateMask}
+                   disabled={samples.length === 0}
+                 >
+                   Generar máscara
+                 </button>
 
-              {samples.length === 0 ? (
-                <p className="samples-empty">
-                  Aún no hay muestras. Haz clic en la imagen.
-                </p>
-              ) : (
-                samples.map((sample, index) => (
-                  <div className="sample-list-item" key={sample.id}>
-                    <span
-                      className="sample-dot"
-                      style={{ backgroundColor: sample.hex }}
-                    />
-                    <div>
-                      <strong>Muestra {index + 1}</strong>
-                      <small>
-                        {sample.hex} · HSL({sample.hsl.h}°, {sample.hsl.s}%,
-                        {" "}{sample.hsl.l}%)
-                      </small>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
+                 <button
+                   className="secondary-button"
+                   onClick={undoLastSample}
+                   disabled={samples.length === 0}
+                 >
+                   Deshacer última muestra
+                 </button>
 
-            <div className="editor-action-stack">
-              <button
-                className="primary-button"
-                onClick={generateMask}
-                disabled={!imageInfo || samples.length === 0}
-              >
-                Generar máscara
-              </button>
+                 <button
+                   className="text-button"
+                   onClick={resetSelection}
+                   disabled={samples.length === 0}
+                 >
+                   Reiniciar selección
+                 </button>
+               </div>
 
-              <button
-                className="secondary-button"
-                onClick={undoLastSample}
-                disabled={samples.length === 0}
-              >
-                Deshacer última muestra
-              </button>
-
-              <button
-                className="text-button"
-                onClick={resetSelection}
-                disabled={samples.length === 0}
-              >
-                Reiniciar selección
-              </button>
-            </div>
-
-            {errorMessage && (
-              <p className="editor-error" role="alert">
-                {errorMessage}
-              </p>
-            )}
-          </aside>
-        </section>
+{errorMessage && (
+                  <p className="editor-error" role="alert">
+                    {errorMessage}
+                  </p>
+                )}
+              </aside>
+          </section>
 
         {selectedPixels && representativeColor && (
           <section className="generated-assets-section">

@@ -1,0 +1,14 @@
+{
+  "id": "darwin",
+  "characterName": "darwin",
+  "zoneName": "piel",
+  "baseImage": "/characters/darwin/base.png",
+  "maskImage": "/characters/darwin/mask.png",
+  "targetColor": {
+    "r": 254,
+    "g": 112,
+    "b": 25
+  },
+  "targetHex": "#FE7019",
+  "selectedPixels": 15095
+}

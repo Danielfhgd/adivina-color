@@ -1,0 +1,14 @@
+{
+  "id": "coraje",
+  "characterName": "coraje",
+  "zoneName": "piel",
+  "baseImage": "/characters/coraje/base.png",
+  "maskImage": "/characters/coraje/mask.png",
+  "targetColor": {
+    "r": 229,
+    "g": 179,
+    "b": 210
+  },
+  "targetHex": "#E5B3D2",
+  "selectedPixels": 10808
+}

@@ -1,0 +1,14 @@
+{
+  "id": "scooby",
+  "characterName": "scooby",
+  "zoneName": "piel",
+  "baseImage": "/characters/scooby/base.png",
+  "maskImage": "/characters/scooby/mask.png",
+  "targetColor": {
+    "r": 172,
+    "g": 108,
+    "b": 13
+  },
+  "targetHex": "#AC6C0D",
+  "selectedPixels": 6302
+}

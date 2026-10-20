@@ -65,7 +65,7 @@ export default function GameSummary({
             <div className="summary-stats">
               <article>
                 <span>Puntaje total</span>
-                <strong>{totalScore}</strong>
+                <strong>{totalScore.toFixed(2)}</strong>
               </article>
 
               <article>

@@ -25,7 +25,7 @@ export default function GameHeader({
 
         <div className="stat-card">
           <span>Puntos</span>
-          <strong>{totalScore}</strong>
+          <strong>{totalScore.toFixed(2)}</strong>
         </div>
 
         {onLeaveGame && (
